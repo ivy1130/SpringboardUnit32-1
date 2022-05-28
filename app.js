@@ -1,6 +1,6 @@
 const express = require('express');
 const ExpressError = require('./expressError')
-const {doMathFunction} = require('./mathFunctions')
+const {convertToNumArr, doMathFunction} = require('./mathFunctions')
 
 const app = express();
 
@@ -14,8 +14,8 @@ app.get('/:mathFunction', function(req, res, next) {
             throw new ExpressError('Make sure all inputs are numbers', 400)
         }
         else {
-            const nums = req.query.nums.split(',').map(Number)
             const mathFunction = req.params.mathFunction
+            const nums = req.query.nums
             const val = doMathFunction(mathFunction, nums)
             return res.json({
             operation: mathFunction,

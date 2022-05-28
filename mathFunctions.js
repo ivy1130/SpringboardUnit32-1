@@ -1,3 +1,7 @@
+const convertToNumArr = (strNums) => {
+    return strNums.split(',').map(Number)
+}
+
 const doMathFunction = (mathFunction, nums) => {
     if (mathFunction === 'mean') {
         return mean(nums)
@@ -11,25 +15,29 @@ const doMathFunction = (mathFunction, nums) => {
 }
 
 const mean = (nums) => {
-    let avg = nums.reduce((a, b) => a + b, 0) / nums.length
-    return avg
+    let numsA = convertToNumArr(nums)
+    let avg = numsA.reduce((a, b) => a + b, 0) / numsA.length
+    avgDec = (Math.round(avg * 100) / 100).toFixed(2)
+    return avgDec
 }
 
 const median = (nums) => {
-    const sorted = nums.sort((a, b) => a - b)
+    let numsA = convertToNumArr(nums)
+    const sorted = numsA.sort((a, b) => a - b)
     const middle = Math.floor(sorted.length / 2)
 
     if (sorted.length % 2 === 0) {
-        return (sorted[middle - 1] + sorted[middle]) / 2
+        return ((sorted[middle - 1] + sorted[middle]) / 2).toString()
     }
-    return sorted[middle]
+    return sorted[middle].toString()
 }
 
 const mode = (nums) => {
+    let numsA = convertToNumArr(nums)
     const numCount = {}
     let max = 0
   
-    for (let num of nums) {
+    for (let num of numsA) {
         if(numCount[num]) {
             numCount[num]++
         } else {
@@ -48,4 +56,4 @@ const mode = (nums) => {
     return mode
   }
 
-module.exports = {doMathFunction}
+module.exports = {convertToNumArr, doMathFunction, mean, median, mode}
